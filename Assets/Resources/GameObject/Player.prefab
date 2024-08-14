@@ -395,10 +395,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b5edd85a53a91a4c8366169221cd9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 54519cd8ffcb20c41bae576fa6fc02e7, type: 3}
   speed: 0.1
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
-  items: []

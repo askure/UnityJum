@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputManagerEntry;
 
 public class EnemyContoller : MonoBehaviour
 {
@@ -26,7 +27,15 @@ public class EnemyContoller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+    }
+
+    public void Init(float changeTime, Sprite notLook, Sprite looking, Sprite find)
+    {
+        this.notLook = notLook;
+        this.looking = looking;
+        this.find = find;
+        this.changeTime = changeTime;
+        icon.sprite = looking;
     }
 
     /// <summary>

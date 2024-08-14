@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 {
     PlayerController player;
     private List<EnemyContoller> enemys;
-   [SerializeField] private List<ItemController> items;
+    private List<ItemController> items;
     private int finds;
     float time;
     bool finish = false;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     void Init()
     {   
         ChangeFloor();
-        var posObj = GameObject.Find("PlayerStartPoint");
+        var posObj = GameObject.FindWithTag("PlayerStartPoint");
         var pos = posObj.transform.position;
         player.transform.position = pos;
         posObj.GetComponent<SpriteRenderer>().color = Color.clear;

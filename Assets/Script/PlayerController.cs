@@ -10,13 +10,13 @@ public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField] private Image icon;
+    [SerializeField] private Sprite icon;
     [SerializeField] private float speed;
-    [SerializeField] private float top,bottom,left,right;
+    private float top,bottom,left,right;
     GameManager gameManager;
     const float DECREASE_RATE = 100f;
-    [SerializeField] private List<ItemController> items;
-    bool stop = false;
+    private List<ItemController> items;
+    bool stop ;
     Slider slider;
     
     void Start()
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
         slider = GameObject.Find("HP").GetComponent<Slider>();
         slider.maxValue = speed;
         slider.minValue = 0;
+        GetComponent<SpriteRenderer>().sprite = icon;
     }
 
 

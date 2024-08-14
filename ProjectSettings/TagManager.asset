@@ -12,6 +12,7 @@ TagManager:
   - DownFloor
   - ChangeFloor
   - ReleaseBox
+  - PlayerStartPoint
   layers:
   - Default
   - TransparentFX
