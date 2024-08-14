@@ -6,7 +6,7 @@ public class EnemyContoller : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    float changeTime = 5;
+    [SerializeField]float changeTime = 5;
     int counter;
     [SerializeField] Sprite notLook, looking,find;
     [SerializeField] SpriteRenderer icon,view;
@@ -51,6 +51,10 @@ public class EnemyContoller : MonoBehaviour
         counter++;
     }
 
+    /// <summary>
+    /// 
+    ///Status‚ğ”­Œ©‚É•Ï‚¦‚éD
+    /// </summary>
     public void ChangeStatusFind()
     {
         status = Status.FIND;

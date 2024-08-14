@@ -6,6 +6,12 @@ TagManager:
   tags:
   - View
   - Enemy
+  - player
+  - Item
+  - UpFloor
+  - DownFloor
+  - ChangeFloor
+  - ReleaseBox
   layers:
   - Default
   - TransparentFX
@@ -42,4 +48,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Objects
+    uniqueID: 1296620375
     locked: 0
