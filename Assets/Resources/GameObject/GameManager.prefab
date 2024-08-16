@@ -48,3 +48,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   limitFind: 1
+  gameClearPanel: {fileID: 5812999764397557718, guid: 2291758ba021a8a47a813217dcf2b56b, type: 3}
+  gameOverPannel: {fileID: 1752005021242997455, guid: 2978c3df46b74f94382fcefd99c71e2c, type: 3}

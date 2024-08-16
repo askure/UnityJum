@@ -2,6 +2,7 @@ using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEngine.Rendering.DebugUI;
@@ -20,7 +21,10 @@ public class GameManager : MonoBehaviour
     int floorNum;
     [SerializeField] GameObject[] Floors;
     [SerializeField] int limitFind;
+    [SerializeField] GameClearPanel gameClearPanel,gameOverPannel;
     Coroutine enemymove;
+    TextMeshProUGUI hidetimeText;
+    GameObject hideTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +59,13 @@ public class GameManager : MonoBehaviour
 
         player = GameObject.FindWithTag("player").GetComponent<PlayerController>();
         player.Init(this);
-        
+
+        hidetimeText = GameObject.Find("HIDE TIME (S)").GetComponent<TextMeshProUGUI>();
+        hideTime = GameObject.Find("HIDE TIME");
+        hidetimeText.gameObject.SetActive(false);
+        this.hideTime.SetActive(false);
+
+
     }
     void Init()
     {   
@@ -131,13 +141,7 @@ public class GameManager : MonoBehaviour
     {   
         if(finish)
             return;
-        int findedItem = 0;
-        foreach (var item in playeritems)
-        {
-            if (items.Contains(item))
-                findedItem++;
-        }
-        if (findedItem == items.Count())
+        if (items.Count == playeritems.Count)
             Clear();
         else
             Debug.Log("‚Ü‚¾‘«‚è‚È‚¢");
@@ -147,6 +151,8 @@ public class GameManager : MonoBehaviour
         finish = true;
         StopCoroutine(enemymove);
         Debug.Log("Finish");
+       
+        Instantiate(gameOverPannel, GameObject.Find("Canvas").transform).Init(player.GetPlayerItems());
     }
 
     public void Clear()
@@ -154,6 +160,7 @@ public class GameManager : MonoBehaviour
         finish = true;
         StopCoroutine(enemymove);
         Debug.Log("Clear");
+        Instantiate(gameClearPanel,GameObject.Find("Canvas").transform).Init(items,(int)time);
     }
     
     IEnumerator CheckTime()
@@ -166,6 +173,18 @@ public class GameManager : MonoBehaviour
             foreach(var e in enemys)
             {
                 e.ChangeStatus(time);
+            }
+            int hidetime = player.ChangeStatus(time);
+            if(hidetime > 0)
+            {
+                hidetimeText.SetText(string.Format("({0})",hidetime));
+                hidetimeText.gameObject.SetActive(true);
+                this.hideTime.SetActive(true);
+            }
+            else
+            {
+                hidetimeText.gameObject.SetActive(false);
+                this.hideTime.SetActive(false);
             }
         }
         

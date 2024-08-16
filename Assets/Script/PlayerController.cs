@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -16,8 +17,17 @@ public class PlayerController : MonoBehaviour
     GameManager gameManager;
     const float DECREASE_RATE = 100f;
     private List<ItemController> items;
+    private ItemController hideItem;
     bool stop ;
     Slider slider;
+
+    
+    private Status status;
+    public  enum Status
+    {
+        HIDE,// 敵に感知されない
+        MOVE // 敵に感知される
+    }
     
     void Start()
     {
@@ -34,6 +44,8 @@ public class PlayerController : MonoBehaviour
         slider = GameObject.Find("HP").GetComponent<Slider>();
         slider.maxValue = speed;
         slider.minValue = 0;
+        status = Status.MOVE;
+        hideItem = null;
         GetComponent<SpriteRenderer>().sprite = icon;
     }
 
@@ -80,19 +92,31 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "View")
         {
-
+            Debug.Log("Looked...?");
+            if (IsHide()) return;
             var enemy = collision.gameObject.transform.parent.GetComponent<EnemyContoller>();
             gameManager.CheckLooked(enemy);
-            Debug.Log("Looked...?");
+            
 
         }
         if(collision.gameObject.tag == "Item")
         {
             var item = collision.gameObject.GetComponent<ItemController>();
             ChangeSpeed(item.GetWeight());
+            if (item.IsHide() && hideItem == null)
+            {
+                hideItem = item;
+                item.gameObject.SetActive(false);
+                status = Status.HIDE;
+            }
+            else
+            {
+                items.Add(item);
+                item.gameObject.SetActive(false);
+            }
             Debug.Log("Get Item!");
-            items.Add(item);
-            item.gameObject.SetActive(false);
+            
+            
         }
         if(collision.gameObject.tag == "UpFloor")
         {
@@ -116,6 +140,22 @@ public class PlayerController : MonoBehaviour
         slider.value = speed;
     }
 
+    public int ChangeStatus(float time)
+    {
+        if(status == Status.HIDE && hideItem.GetEnableTime() < time)
+        {
+            status = Status.MOVE;
+            hideItem = null;
+            return 0;
+        }
+        else if(status == Status.HIDE)
+            return (int)(hideItem.GetEnableTime() - time) ;
+        return 0;
+    }
+    public bool IsHide()
+    {
+        return status == Status.HIDE;
+    }
     /// <summary>
     /// エリア移動の際，慣性で動くから，1s停止
     /// </summary>
@@ -126,6 +166,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         stop = false;
     }
+
+    public List<ItemController> GetPlayerItems()
+    {
+        return items;
+    }
+  
 
 
 }
