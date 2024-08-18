@@ -73,3 +73,5 @@ crashlytics-build.properties
 .vscode/launch.json
 *.vsconfig
 .vscode/extensions.json
+Assets/font/NotoSansJP-Medium.ttf
+Assets/font/NotoSansJP-Medium.ttf.meta

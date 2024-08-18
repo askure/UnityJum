@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
             items.Add(o.GetComponent<ItemController>());
         }
         items.RemoveAll(e => e == null);
-
+        items.RemoveAll(e => e.IsHide());
         player = GameObject.FindWithTag("player").GetComponent<PlayerController>();
         player.Init(this);
 
